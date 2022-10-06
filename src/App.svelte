@@ -3,8 +3,9 @@
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>SAPORO Coding Challenge by {name}</h1>
+	<p>Task: Recreate node detail history</p>
+	<p>Implemented with Svelte.js</p>
 </main>
 
 <style>
@@ -18,7 +19,7 @@
 	h1 {
 		color: #ff3e00;
 		text-transform: uppercase;
-		font-size: 4em;
+		font-size: 2em;
 		font-weight: 100;
 	}
 
