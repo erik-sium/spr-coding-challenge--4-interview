@@ -1,5 +1,5 @@
 <script>
-	import NodeNavigationHistory from "./components/NodeNavigationHistoryPane.svelte";
+	import NodeNavigationHistory from "./components/containers/NodeNavigationHistoryPane.svelte";
 
 	export let name;
 

@@ -1,13 +1,9 @@
 <script>
-
-  import {v4 as uuidv4} from 'uuid'
-  import { ItemsStore } from '../stores/items'
-  import { NodeNavigationHistoryStore } from '../stores/nodeNavigationHistory'
+  import { NodeNavigationHistoryStore } from '../../stores/nodeNavigationHistory'
   import { get } from 'svelte/store'
+  import ItemsTable from '../units/ItemsTable.svelte';
 
-  const consoleLogNavigationHistory = () => {
-    console.log(get(NodeNavigationHistoryStore))
-  }
+  import { consoleLogNavigationHistory } from '../../tools/utilities'
 
 	const backButtonPress = () => {
 
@@ -19,35 +15,6 @@
 
     consoleLogNavigationHistory()
 	}
-
-  const itemsTableRowPress = (itemId) => {
-
-    const itemIndex = get(ItemsStore).findIndex(item => item.id == itemId)
-    const item = get(ItemsStore).at(itemIndex)
-    
-
-    const isFirstItem = get(NodeNavigationHistoryStore).length < 1
-    let lastItemId
-    
-    if(!isFirstItem){
-      lastItemId = get(NodeNavigationHistoryStore).at(get(NodeNavigationHistoryStore).length -1).itemId
-    }
-
-    // Prevents navigating to the last item in the navigation history again. A condition skips this check if there is no navigation history.
-    if(isFirstItem || itemId != lastItemId) {
-      const newHistoryItem = {
-        historyId: uuidv4(),
-        itemId: item.id,
-        itemName: item.name
-      }
-
-      NodeNavigationHistoryStore.update((currentNavigationHistory) => {
-        return [...currentNavigationHistory, newHistoryItem]
-      })
-    }
-    
-    consoleLogNavigationHistory() 
-  }
 
   const historyItemPress = (historyItem) => {
 		
@@ -63,6 +30,7 @@
   }
 
 </script>
+
 
 <div class="node-navigation-history-pane">
 
@@ -87,17 +55,9 @@
     {/if}
   </div>
 
-  <div id="items-table">
-    <table>
-      {#each $ItemsStore as item (item.id)}
-          <tr on:click={() => itemsTableRowPress(item.id) }>
-            { item.name }
-          </tr>
-      {/each}
-    </table> 
-  </div>
-
+  <ItemsTable />
 </div>
+
 
 <style>
 
@@ -143,8 +103,5 @@
     text-align: left;
   }
 
-  #items-table > table {
-    width: 100%;
-  }
-
+  
 </style>
