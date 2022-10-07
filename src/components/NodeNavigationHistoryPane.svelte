@@ -10,6 +10,9 @@
   }
 
 	const backButtonPress = () => {
+
+    // Updates navigation history to start from the beginning and end at the penultimate item.
+    // Removes the current item from the navigation history.
     NodeNavigationHistoryStore.update((currentNavigationHistory) => {
       return currentNavigationHistory.slice(0, currentNavigationHistory.length -1)
     })
@@ -30,6 +33,7 @@
       lastItemId = get(NodeNavigationHistoryStore).at(get(NodeNavigationHistoryStore).length -1).itemId
     }
 
+    // Prevents navigating to the last item in the navigation history again. A condition skips this check if there is no navigation history.
     if(isFirstItem || itemId != lastItemId) {
       const newHistoryItem = {
         historyId: uuidv4(),
@@ -48,6 +52,9 @@
   const historyItemPress = (historyItem) => {
 		
     let historyItemIndex = get(NodeNavigationHistoryStore).indexOf(historyItem)
+
+    // Updates navigation history to start from the beginning and end at the selected item.
+    // Removes all history after the selected item.
     NodeNavigationHistoryStore.update((currentNavigationHistory) => {
       return currentNavigationHistory.slice(0, historyItemIndex + 1)
     })
