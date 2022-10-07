@@ -51,4 +51,8 @@
 		position: absolute;
 		left: 200px;
 	}
+
+	button {
+		cursor: pointer;
+	}
 </style>

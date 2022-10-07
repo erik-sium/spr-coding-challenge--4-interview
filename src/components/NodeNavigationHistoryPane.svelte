@@ -1,7 +1,20 @@
 <script>
+
+  import { Items } from '../stores/items'
+  import { NodeNavigationHistory } from '../stores/nodeNavigationHistory'
+
 	const backButtonPress = () => {
-		
+    NodeNavigationHistory.update((currentNavigationHistory) => {
+      return currentNavigationHistory.slice(0, currentNavigationHistory.length -1)
+    })
 	}
+
+  const itemsTableRowPress = (itemName) => {
+		
+    NodeNavigationHistory.update((currentNavigationHistory) => {
+      return [...currentNavigationHistory, itemName]
+    })
+  }
 </script>
 
 <div class="node-navigation-history-pane">
@@ -12,33 +25,32 @@
     </button>
 
     <table id="history-table">
-      <td>
-        a
-      </td>
-      <td>
-        b
-      </td>
-    </table> 
+      {#each $NodeNavigationHistory as historyItem (historyItem)}
+          <!-- <td on:click={() => itemsTableRowPress(item.name) }> -->
+          <td>
+            { historyItem }
+          </td>
+      {/each}
+    </table>
   </div>
 
   <div id="detail">
-    Detail:
+    Detail: 
+    {#if $NodeNavigationHistory.at($NodeNavigationHistory.length - 1)}
+      {$NodeNavigationHistory.at($NodeNavigationHistory.length - 1)}
+    {:else}
+    {/if}
   </div>
 
   <div id="items-table">
     <table>
-      <tr>
-        ciao
-      </tr>
-      <tr>
-        miao
-      </tr>
-      <tr>
-        azzo
-      </tr>
+      {#each $Items as item (item.id)}
+          <tr on:click={() => itemsTableRowPress(item.name) }>
+            { item.name }
+          </tr>
+      {/each}
     </table> 
   </div>
-  
 
 </div>
 
@@ -48,6 +60,7 @@
 
     border-collapse: collapse;
     border: 1px solid;
+    cursor: pointer;
   }
 
   .node-navigation-history-pane {
@@ -72,6 +85,7 @@
 
   #back-button {
     display: inline-block;
+    cursor: pointer;
   }
 
   #history-table {
