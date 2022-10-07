@@ -61,7 +61,7 @@
 
 <style>
 
-  table, td, tr, th {
+  table, td {
 
     border-collapse: collapse;
     border: 1px solid;
